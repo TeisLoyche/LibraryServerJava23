@@ -2,6 +2,7 @@ package library.LibraryServerJava.models;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -12,9 +13,11 @@ public class Loan {
     @Id
     private String id;
 
-    private String bookId;
+    @DBRef
+    private Book book;
 
-    private String loanedBy;
+    @DBRef
+    private User loanedBy;
 
     @CreatedDate
     private Date loanedAt;
@@ -30,14 +33,6 @@ public class Loan {
         return id;
     }
 
-    public String getBookId() {
-        return bookId;
-    }
-
-    public String getLoanedBy() {
-        return loanedBy;
-    }
-
     public Date getLoanedAt() {
         return loanedAt;
     }
@@ -46,9 +41,33 @@ public class Loan {
         return returnBy;
     }
 
-    // SETTER for the return date, in order to be able to update it in postman.
+    public Book getBook() {
+        return book;
+    }
+
+    public User getLoanedBy() {
+        return loanedBy;
+    }
+
+    // SETTERS.
 
     public void setReturnBy(LocalDate returnBy) {
         this.returnBy = returnBy;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public void setLoanedBy(User loanedBy) {
+        this.loanedBy = loanedBy;
+    }
+
+    public void setLoanedAt(Date loanedAt) {
+        this.loanedAt = loanedAt;
     }
 }

@@ -15,8 +15,8 @@ public class LoanController {
 
     // CREATE a loan.
     @PostMapping()
-    public Loan createLoan(@RequestBody Loan loan) {
-        return loanService.createLoan(loan);
+    public Loan createLoan(@RequestParam String userId, String bookId) {
+        return loanService.createLoan(userId, bookId);
     }
 
     // DELETE a loan based on ID.
