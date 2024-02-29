@@ -1,5 +1,6 @@
 package library.LibraryServerJava.services;
 
+import library.LibraryServerJava.exception.EntityNotFoundException;
 import library.LibraryServerJava.models.Book;
 import library.LibraryServerJava.models.Loan;
 import library.LibraryServerJava.models.User;
@@ -54,7 +55,22 @@ public class LoanService {
     }
 
     // UPDATE a loan.
-    public Loan updateLoan(Loan loan) {
-        return loanRepository.save(loan);
+    public Loan updateLoan(String id, Loan updatedLoan) {
+        return loanRepository.findById(id).map(existingLoan -> {
+            if (updatedLoan.getBook() != null) {
+                existingLoan.setBook(updatedLoan.getBook());
+            }
+            if (updatedLoan.getLoanedBy() != null) {
+                existingLoan.setLoanedBy(updatedLoan.getLoanedBy());
+            }
+            if (updatedLoan.getLoanedAt() != null) {
+                existingLoan.setLoanedAt(updatedLoan.getLoanedAt());
+            }
+            if (updatedLoan.getReturnBy() != null) {
+                existingLoan.setReturnBy(updatedLoan.getReturnBy());
+            }
+            return loanRepository.save(existingLoan);
+        })
+                .orElseThrow(() -> new EntityNotFoundException("Loan with id " + id + " was not found."));
     }
 }
