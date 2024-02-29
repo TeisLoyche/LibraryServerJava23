@@ -1,8 +1,11 @@
 package library.LibraryServerJava.controllers;
 
+import library.LibraryServerJava.exception.EntityNotFoundException;
 import library.LibraryServerJava.models.Loan;
 import library.LibraryServerJava.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,8 +39,13 @@ public class LoanController {
     }
 
     // UPDATE a loan.
-    @PutMapping()
-    public Loan updateLoan(@RequestBody Loan loan) {
-        return loanService.updateLoan(loan);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateLoan(@PathVariable String id, @RequestBody Loan loanDetails) {
+        try {
+            Loan updatedLoan = loanService.updateLoan(id, loanDetails);
+            return ResponseEntity.ok(updatedLoan);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
