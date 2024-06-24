@@ -1,3 +1,5 @@
+This was a task for school in which we had to create a "library"-API, allowing a user to perform CRUD operations for books and loans. 
+
 1. Clone this repo.
 2. Open a terminal and create/choose the folder in which you want to save the project.
 3. Clone the repo into the folder using: https://github.com/TeisLoyche/LibraryServerJava23.git
